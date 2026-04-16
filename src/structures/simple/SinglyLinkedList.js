@@ -54,25 +54,59 @@ class SinglyLinkedList {
   }
 
   countOccurrences(value) {
-    throw new Error(
-      "TODO RETO: Implementar countOccurrences(value) en SinglyLinkedList."
-    );
+    let count = 0;
+    let current = this.head;
+    while (current !== null) {
+      if (this._isSameValue(current.value, value)) {
+        count++;
+      }
+      current = current.next;
+    }
+    return count;
   }
+    
 
   clean() {
-    throw new Error("TODO RETO: Implementar clean() en SinglyLinkedList.");
+    this.head = null;
+    this.tail = null;
+    const oldSize = this._size;
+    this._size = 0;
+    return oldSize;
   }
 
   reverseInPlace() {
-    throw new Error(
-      "TODO RETO: Implementar reverseInPlace() en SinglyLinkedList."
-    );
+    let prev = null;
+    let current = this.head;
+    this.tail = this.head;
+    while (current !== null) {
+      const next = current.next;
+      current.next = prev;
+      prev = current;
+      current = next;
+    }
+    this.head = prev;
+
   }
 
   removeDuplicates() {
-    throw new Error(
-      "TODO RETO: Implementar removeDuplicates() en SinglyLinkedList."
-    );
+    const seen = new Set();
+    let current = this.head;
+    let prev = null;
+    while (current !== null) {
+      if (seen.has(current.value)) {
+        prev.next = current.next;
+        if (current === this.tail) {
+          this.tail = prev;
+        }
+        this._size--;
+      } else {
+        seen.add(current.value);
+        prev = current;
+      }
+      current = current.next;
+    }
+
+    return this.toString();
   }
 
   size() {
